@@ -9,11 +9,11 @@ class CreateTrendCrawlSites < ActiveRecord::Migration
       t.datetime :created_on
       t.datetime :updated_on
       t.datetime :expires_on
-      t.string :registrar
-      t.string :registrant_contacts
-      t.string :admin_contacts
-      t.string :technical_contacts
-      t.string :nameservers
+      t.text :registrar
+      t.text :registrant_contacts
+      t.text :admin_contacts
+      t.text :technical_contacts
+      t.text :nameservers
 
       t.timestamps null: false
     end
