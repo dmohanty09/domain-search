@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  domain: MyString
+  domain_id: MyString
+  status: MyString
+  available?: false
+  registered?: false
+  created_on: 2015-02-26 19:22:27
+  updated_on: 2015-02-26 19:22:27
+  expires_on: 2015-02-26 19:22:27
+  registrar: MyString
+  registrant_contacts: MyString
+  admin_contacts: MyString
+  technical_contacts: MyString
+  nameservers: MyString
+
+two:
+  domain: MyString
+  domain_id: MyString
+  status: MyString
+  available?: false
+  registered?: false
+  created_on: 2015-02-26 19:22:27
+  updated_on: 2015-02-26 19:22:27
+  expires_on: 2015-02-26 19:22:27
+  registrar: MyString
+  registrant_contacts: MyString
+  admin_contacts: MyString
+  technical_contacts: MyString
+  nameservers: MyString

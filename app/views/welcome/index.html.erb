@@ -1,0 +1,67 @@
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <title>Bootswatch: Cosmo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="./style.css" media="screen">
+  </head>
+  <body style="">
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="../" class="navbar-brand">Domain Search</a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+	<div class="container">
+		<div class="page-header" id="banner">
+		     <div class="row">
+	         	<div class="col-lg-8 col-md-7 col-sm-6">
+	           		<h1>Google Trends + WhoIs</h1>
+					<p class="lead">This service uses trending Google searches to find undeveloped domain names...</p>
+	         	</div>
+	       	 </div>
+	     </div>
+		<div id="domain_list_view">
+			<% domain_names.each do |name| %>
+				<div class="panel panel-default">
+				  <div class="panel-heading"><a class="domain_link" data-target-content="<%= name %>"><%= name %></a></div>
+	              <div id="<%= name %>" class="panel-body">
+	                Panel content
+	              </div>
+	            </div>
+			<% end %>
+	    </div>
+	</div>
+	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script>
+		$(function(){
+			$(".domain_link").click(function(event){
+				var content_id = $(event.target).text();
+				$.get("http://localhost:4567/domain/"+content_id,function(data){
+					var html_content = parse_whois(JSON.parse(data),$("<div>"));
+					$("#"+content_id.replace(/\./g, "\\.")).html(html_content);
+				});
+			});
+		});
+		function parse_whois(record,html){
+			for(var k in record){
+				if (['disclaimer'].indexOf(k) < 0) {
+				    html = add_detail(k,record[k],html);
+				}
+			}
+			return html;
+		}
+		function add_detail(key,value,html){
+			html.append($("<div>").append("<b>"+key+":</b> "+value));
+			return html;
+		}
+	</script>
+  
+
+</body></html>
