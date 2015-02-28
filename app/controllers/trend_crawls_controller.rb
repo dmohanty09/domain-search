@@ -6,8 +6,10 @@ class TrendCrawlsController < ApplicationController
     crawler = Crawler.new
     #@domain_names = crawler.query_google
     @domain_names = TrendCrawlSite.all
-    if !params[:search_query].nil?
+    if params[:search_query] == ""
       @fresh_names = crawler.query_google.to_json
+    elsif !params[:search_query].nil?
+      @fresh_names = [].to_json
     else
       @fresh_names = [].to_json
     end
@@ -25,6 +27,7 @@ class TrendCrawlsController < ApplicationController
       domain[:registrant_contacts] = (domain[:registrant_contacts]||[]).map{|r|r.to_h}
       domain[:admin_contacts] = (domain[:admin_contacts]||[]).map{|r|r.to_h}
       domain[:technical_contacts] = (domain[:technical_contacts]||[]).map{|r|r.to_h}
+      domain[:nameservers] = (domain[:nameservers]||[]).map{|r|r.to_h}
       TrendCrawlSite.new(domain.except(:disclaimer)).save
       puts "saving..."
     else
