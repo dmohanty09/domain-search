@@ -1,6 +1,6 @@
 <html lang="en"><head>
     <meta charset="utf-8">
-    <title>Bootswatch: Cosmo</title>
+    <title>Domain Search</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="./style.css" media="screen">
@@ -23,10 +23,10 @@
 		<div class="page-header" id="banner">
 		     <div class="row">
 	         	<div class="col-lg-8 col-md-7 col-sm-6">
-	           		<h1>Google Trends + WhoIs</h1>
-					<p class="lead">This service uses trending Google searches to find undeveloped domain names...</p>
+	           		<h1>A Domain Name Suggester</h1>
+					<p >Contribute to the growing list of valuable domain names by typing in words/phrases into the query bar below. Domain Search will suggest 10 domain names based on a query made to Google's autosuggest service. If you execute a query with a blank field, google trends will be used to generate domain suggestions. Check out the availability status of the newly found domain names to the right. Also, take a look at all the valuable domain names that are available, databased below.</p>
 					<p>
-						<form action="trend_crawls" class="navbar-form navbar-left" role="search">
+						<form action="trend_crawls" class="navbar-form navbar-left" role="search" style="padding: 0px;">
 	                      <div class="form-group">
 	                        <input id="search_query" name="search_query" type="text" class="form-control" data-query="<%= @fresh_names %>" placeholder="Search">
 	                      </div>
@@ -37,18 +37,16 @@
                 <div id="domain_hot_spot" class="col-sm-5" style="margin-top: 16px;"></div>
 	       	 </div>
 	     </div>
-		<div id="domain_table_view">
+		<div id="domain_table_view" style="margin-bottom: 16px;">
 			<table id="domain_name_table">
 				<thead>
 		            <tr>
 		                <th>domain</th>
-					    <th>domain_id</th>
 					    <th>status</th>
-					    <th>available?</th>
-					    <th>registered?</th>
 					    <th>created_on</th>
 					    <th>updated_on</th>
 					    <th>expires_on</th>
+					    <th>domain_id</th>
 		            </tr>
 		        </thead>
 		        <tbody>
@@ -56,17 +54,15 @@
 						<!-- <a class="domain_link" data-target-content="domain_hot_spot"><%= domain.domain %></a> -->
 						<tr>
 							<td><a href="http://<%= domain.domain %>" target="_blank"><%= domain.domain %></a></td>
-						    <td><%= domain.domain_id %></td>
 						    <% if domain.available? %>
 						    	<td><span style="color: green;" ><%= domain.status %></span></td>
 						    <% else %>
 						    	<td><span style="color: red;" ><%= domain.status %></span></td>
 						    <% end %>
-						    <td><%= domain.available? %></td>
-						    <td><%= domain.registered? %></td>
 						    <td><%= domain.created_on %></td>
 						    <td><%= domain.updated_on %></td>
 						    <td><%= domain.expires_on %></td>
+						    <td><%= domain.domain_id %></td>
 						</tr>
 					<% end %>
 				</tbody>
