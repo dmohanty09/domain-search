@@ -31,11 +31,10 @@
 	                        <input id="search_query" name="search_query" type="text" class="form-control" data-query="<%= @fresh_names %>" placeholder="Search">
 	                      </div>
 	                      <button type="submit" class="btn btn-default">Query</button>
-	                      <button type="submit" class="btn btn-primary">Trending</button>
 	                    </form>
                 	</p>
 	         	</div>
-                <div id="domain_hot_spot" class="col-sm-4"></div>
+                <div id="domain_hot_spot" class="col-sm-5" style="margin-top: 16px;"></div>
 	       	 </div>
 	     </div>
 		<div id="domain_table_view">
@@ -56,7 +55,7 @@
 					<% @domain_names.each do |domain| %>
 						<!-- <a class="domain_link" data-target-content="domain_hot_spot"><%= domain.domain %></a> -->
 						<tr>
-							<td><a href="http://<%= domain.domain %>"><%= domain.domain %></a></td>
+							<td><a href="http://<%= domain.domain %>" target="_blank"><%= domain.domain %></a></td>
 						    <td><%= domain.domain_id %></td>
 						    <% if domain.available? %>
 						    	<td><span style="color: green;" ><%= domain.status %></span></td>
@@ -84,8 +83,24 @@
 			
 			search_query.forEach(function(domain_name_to_lookup){
 				$.get("http://localhost:3000/trend_crawls/"+domain_name_to_lookup,function(data){
-					var html_content = parse_whois(data,$("<div>"));
-					$("#domain_hot_spot").html(html_content);
+					var record = data;
+					var row = $("<div>").addClass("row");
+					var propert_field = $("<a>").text(data.domain);
+					propert_field.css('float','left');
+					propert_field.attr('href', "http://" + data.domain);
+					propert_field.attr('target', "_blank");
+					row.append(propert_field);
+					var status_color = undefined;
+					if(data.status === "available"){
+						status_color = "green";
+					}else{
+						status_color = "red";
+					}
+					var value_field = $("<div>").text(data.status);
+					value_field.css('color',status_color);
+					value_field.css('float','right');
+					row.append(value_field);
+					$("#domain_hot_spot").append(row);
 				});
 			});
 		});
