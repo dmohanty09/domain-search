@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="./style.css" media="screen">
+    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.5/css/jquery.dataTables.min.css" media="screen">
   </head>
   <body style="">
     <div class="navbar navbar-default navbar-fixed-top">
@@ -25,27 +26,64 @@
 	           		<h1>Google Trends + WhoIs</h1>
 					<p class="lead">This service uses trending Google searches to find undeveloped domain names...</p>
 	         	</div>
+	         	<div class="col-sm-6">
+					<form class="navbar-form navbar-left" role="search">
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                      </div>
+                      <button type="submit" class="btn btn-default">Query</button>
+                      <button type="submit" class="btn btn-primary">Trending</button>
+                    </form>
+                </div>
 	       	 </div>
 	     </div>
-		<div id="domain_list_view">
-			<% @domain_names.each do |name| %>
-				<div class="panel panel-default">
-				  <div class="panel-heading"><a class="domain_link" data-target-content="<%= name %>"><%= name %></a></div>
-	              <div id="<%= name %>" class="panel-body">
-	                Panel content
-	              </div>
-	            </div>
-			<% end %>
-	    </div>
+		<div id="domain_table_view">
+			<div id="domain_hot_spot"></div>
+			<table id="domain_name_table">
+				<thead>
+		            <tr>
+		                <th>domain</th>
+					    <th>domain_id</th>
+					    <th>status</th>
+					    <th>available?</th>
+					    <th>registered?</th>
+					    <th>created_on</th>
+					    <th>updated_on</th>
+					    <th>expires_on</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+					<% @domain_names.each do |domain| %>
+						<!-- <a class="domain_link" data-target-content="domain_hot_spot"><%= domain.domain %></a> -->
+						<tr>
+							<td><a href="http://<%= domain.domain %>"><%= domain.domain %></a></td>
+						    <td><%= domain.domain_id %></td>
+						    <% if domain.available? %>
+						    	<td><span style="color: green;" ><%= domain.status %></span></td>
+						    <% else %>
+						    	<td><span style="color: red;" ><%= domain.status %></span></td>
+						    <% end %>
+						    <td><%= domain.available? %></td>
+						    <td><%= domain.registered? %></td>
+						    <td><%= domain.created_on %></td>
+						    <td><%= domain.updated_on %></td>
+						    <td><%= domain.expires_on %></td>
+						</tr>
+					<% end %>
+				</tbody>
+		    </table>
+		</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script src="http://cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js"></script>
 	<script>
 		$(function(){
+			$('#domain_name_table').DataTable();
 			$(".domain_link").click(function(event){
 				var content_id = $(event.target).text();
 				$.get("http://localhost:3000/trend_crawls/"+content_id,function(data){
 					var html_content = parse_whois(data,$("<div>"));
-					$("#"+content_id.replace(/\./g, "\\.")).html(html_content);
+					$("#domain_hot_spot").html(html_content);
 				});
 			});
 		});

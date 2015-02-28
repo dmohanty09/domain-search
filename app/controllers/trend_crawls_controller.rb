@@ -4,7 +4,8 @@ class TrendCrawlsController < ApplicationController
   
   def index
     crawler = Crawler.new
-    @domain_names = crawler.query_google
+    #@domain_names = crawler.query_google
+    @domain_names = TrendCrawlSite.all
   end
   
   def show
