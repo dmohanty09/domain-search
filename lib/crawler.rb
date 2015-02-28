@@ -34,6 +34,15 @@ class Crawler
        @name_list << search
      end
   end
+
+  def query_suggestions(search_query)
+    uri = URI('http://suggestqueries.google.com/complete/search')
+    params = {:client => 'firefox', :q => "#{search_query}"}
+    uri.query = URI.encode_www_form(params)
+    res = Net::HTTP.get_response(uri)
+    @name_list = JSON.parse(res.body)[1]
+    sanitize_strings(@name_list).map{|name|name + ".com"}
+  end
   
   def who_is_lookup(domain_name)
     Whois.whois(domain_name).properties

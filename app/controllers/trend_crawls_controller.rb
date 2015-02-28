@@ -9,7 +9,7 @@ class TrendCrawlsController < ApplicationController
     if params[:search_query] == ""
       @fresh_names = crawler.query_google.to_json
     elsif !params[:search_query].nil?
-      @fresh_names = [].to_json
+      @fresh_names = crawler.query_suggestions(params[:search_query]).to_json
     else
       @fresh_names = [].to_json
     end
