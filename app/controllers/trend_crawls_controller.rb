@@ -6,6 +6,11 @@ class TrendCrawlsController < ApplicationController
     crawler = Crawler.new
     #@domain_names = crawler.query_google
     @domain_names = TrendCrawlSite.all
+    if !params[:search_query].nil?
+      @fresh_names = crawler.query_google.to_json
+    else
+      @fresh_names = [].to_json
+    end
   end
   
   def show
