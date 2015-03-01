@@ -3,16 +3,7 @@ require 'crawler'
 class TrendCrawlsController < ApplicationController
   
   def index
-    crawler = Crawler.new
-    #@domain_names = crawler.query_google
     @domain_names = TrendCrawlSite.all
-    if params[:search_query] == ""
-      @fresh_names = crawler.query_google.to_json
-    elsif !params[:search_query].nil?
-      @fresh_names = crawler.query_suggestions(params[:search_query]).to_json
-    else
-      @fresh_names = [].to_json
-    end
   end
   
   def show
@@ -36,6 +27,18 @@ class TrendCrawlsController < ApplicationController
     end
     
     render json: domain
+  end
+
+  def new
+    crawler = Crawler.new
+    if params[:search_query] == ""
+      @fresh_names = crawler.query_google
+    elsif !params[:search_query].nil?
+      @fresh_names = crawler.query_suggestions(params[:search_query])
+    else
+      @fresh_names = []
+    end
+    render json: @fresh_names
   end
   
 end
