@@ -86,26 +86,9 @@
 			            //your success code
 			            var search_query = response;
 						search_query.forEach(function(domain_name_to_lookup){
-							$.get("/trend_crawls/"+domain_name_to_lookup,function(data){
-								var record = data;
-								var row = $("<div>").addClass("row");
-								var propert_field = $("<a>").text(data.domain);
-								propert_field.css('float','left');
-								propert_field.attr('href', "http://" + data.domain);
-								propert_field.attr('target', "_blank");
-								row.append(propert_field);
-								var status_color = undefined;
-								if(data.status === "available"){
-									status_color = "green";
-								}else{
-									status_color = "red";
-								}
-								var value_field = $("<div>").text(data.status);
-								value_field.css('color',status_color);
-								value_field.css('float','right');
-								row.append(value_field);
-								$("#domain_hot_spot").prepend(row);
-							});
+							setTimeout(function(){
+							    fetch_query(domain_name_to_lookup);
+							}, 1000);
 						});
 			        },
 			        error: function () {
@@ -125,6 +108,28 @@
 		function add_detail(key,value,html){
 			html.append($("<div>").append("<b>"+key+":</b> "+value));
 			return html;
+		}
+		function fetch_query(domain_name_to_lookup){
+			$.get("/trend_crawls/"+domain_name_to_lookup,function(data){
+				var record = data;
+				var row = $("<div>").addClass("row");
+				var propert_field = $("<a>").text(data.domain);
+				propert_field.css('float','left');
+				propert_field.attr('href', "http://" + data.domain);
+				propert_field.attr('target', "_blank");
+				row.append(propert_field);
+				var status_color = undefined;
+				if(data.status === "available"){
+					status_color = "green";
+				}else{
+					status_color = "red";
+				}
+				var value_field = $("<div>").text(data.status);
+				value_field.css('color',status_color);
+				value_field.css('float','right');
+				row.append(value_field);
+				$("#domain_hot_spot").prepend(row);
+			});
 		}
 	</script>
   
