@@ -34,7 +34,7 @@
 	                    </form>
                 	</p>
 	         	</div>
-                <div id="domain_hot_spot" class="col-sm-5" style="margin-top: 16px;"></div>
+                <div id="domain_hot_spot" class="col-sm-5" style="margin-top: 16px;height: 244px;overflow: scroll;"></div>
 	       	 </div>
 	     </div>
 		<div id="domain_table_view" style="margin-bottom: 16px;">
@@ -104,7 +104,7 @@
 								value_field.css('color',status_color);
 								value_field.css('float','right');
 								row.append(value_field);
-								$("#domain_hot_spot").append(row);
+								$("#domain_hot_spot").prepend(row);
 							});
 						});
 			        },

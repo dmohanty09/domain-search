@@ -21,7 +21,7 @@ class Crawler
         end
       end
     end
-    sanitize_strings(@name_list).map{|name|name + ".com"}
+    sanitize_strings(@name_list)
   end
   
   def parse_trend(trend)
@@ -41,7 +41,7 @@ class Crawler
     uri.query = URI.encode_www_form(params)
     res = Net::HTTP.get_response(uri)
     @name_list = JSON.parse(res.body)[1]
-    sanitize_strings(@name_list).map{|name|name + ".com"}
+    sanitize_strings(@name_list)
   end
   
   def who_is_lookup(domain_name)
