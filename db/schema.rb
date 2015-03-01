@@ -22,11 +22,11 @@ ActiveRecord::Schema.define(version: 20150227012227) do
     t.datetime "created_on"
     t.datetime "updated_on"
     t.datetime "expires_on"
-    t.string   "registrar"
-    t.string   "registrant_contacts"
-    t.string   "admin_contacts"
-    t.string   "technical_contacts"
-    t.string   "nameservers"
+    t.text     "registrar"
+    t.text     "registrant_contacts"
+    t.text     "admin_contacts"
+    t.text     "technical_contacts"
+    t.text     "nameservers"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
   end
