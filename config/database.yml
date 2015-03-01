@@ -26,5 +26,5 @@ production:
   username: root
   password: toor
   host: localhost
-  pool: 5
+  pool: 20
   timeout: 15000
