@@ -86,7 +86,7 @@
 			            //your success code
 			            var search_query = response;
 						search_query.forEach(function(domain_name_to_lookup){
-							$.get("http://localhost:3000/trend_crawls/"+domain_name_to_lookup,function(data){
+							$.get("/trend_crawls/"+domain_name_to_lookup,function(data){
 								var record = data;
 								var row = $("<div>").addClass("row");
 								var propert_field = $("<a>").text(data.domain);
