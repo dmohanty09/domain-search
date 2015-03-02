@@ -2,10 +2,12 @@ require 'crawler'
 
 class TrendCrawlsController < ApplicationController
   
+  #load list of all previously found domain names
   def index
     @domain_names = TrendCrawlSite.all
   end
   
+  #response to ajax request for whois lookup of specified domain name
   def show
     domain_name_suffixed = params[:id] + ".com"
     site_in_db = TrendCrawlSite.find_by(domain: domain_name_suffixed)
@@ -29,6 +31,7 @@ class TrendCrawlsController < ApplicationController
     render json: domain
   end
 
+  #generate list of domain names to crawl based on query + google suggestions or google trends
   def new
     crawler = Crawler.new
     if params[:search_query] == ""

@@ -2,11 +2,12 @@ require 'net/http'
 require 'whois'
 
 class Crawler
-  
+  #only accept alphanumeric or numeric characters
   def sanitize_strings(name_list)
     name_list.map{|n|n.downcase.gsub(/[^a-z0-9]/i, '')} - [""]
   end
   
+  #domain name suggestions for blank query
   def query_google
     postData = Net::HTTP.post_form(URI.parse('http://www.google.com/trends/hottrends/hotItems'), {"ajax"=>"1","pn"=>"p1","htv"=>"m"})
     parse_trends(JSON.parse(postData.body))
@@ -35,6 +36,7 @@ class Crawler
      end
   end
 
+  #domain name suggestions for specified search_query
   def query_suggestions(search_query)
     uri = URI('http://suggestqueries.google.com/complete/search')
     params = {:client => 'firefox', :q => "#{search_query}"}
